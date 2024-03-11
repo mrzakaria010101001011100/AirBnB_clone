@@ -1,6 +1,6 @@
 from datetime import datetime
 from uuid import uuid4
-from models import storage
+import models
 
 
 class BaseModel:
@@ -31,13 +31,13 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
         # Ensure the object is added to storage after saving to file
-        storage.new(self)
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of the instance"""
         dict_copy = self.__dict__.copy()
+        dict_copy['id'] = self.id
         dict_copy['__class__'] = self.__class__.__name__
         dict_copy['created_at'] = self.created_at.isoformat()
         dict_copy['updated_at'] = self.updated_at.isoformat()

@@ -20,8 +20,9 @@ class FileStorage:
 
     def new(self, obj):
         """method new"""
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.__objects[key] = obj
+        if obj:
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            self.__objects[key] = obj
 
     def save(self):
         """method save"""
@@ -38,5 +39,5 @@ class FileStorage:
                 objects_dict = json.load(f)
                 for key, val in objects_dict.items():
                     FileStorage.__objects[key] = eval(val["__class__"])(**val)
-        except FileNotFoundError:
+        except Exception:
             return

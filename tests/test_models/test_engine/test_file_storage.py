@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 import unittest
+import os
 from models.engine.file_storage import FileStorage
 
 
 class TestFileStorage(unittest.TestCase):
-        """Clean file"""
+    """Clean file"""
+
     def setUp(self):
         self.file_storage = FileStorage()
         setattr(FileStorage, "_FileStorage__objects", {})

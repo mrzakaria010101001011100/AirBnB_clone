@@ -1,10 +1,5 @@
-#!/usr/bin/python3
-"""
-Module containing the BaseModel class
-"""
-
-import uuid
 from datetime import datetime
+from uuid import uuid4
 
 class BaseModel:
     """
@@ -14,10 +9,9 @@ class BaseModel:
         """Initialization of the BaseModel"""
         if kwargs:
             for key, value in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
+                if key in ['created_at', 'updated_at']:
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if key != '__class__':
-                    setattr(self, key, value)
+                setattr(self, key, value)
         else:
             self.id = str(uuid4())
             self.created_at = self.updated_at = datetime.now()
@@ -37,18 +31,31 @@ class BaseModel:
         dict_copy['created_at'] = self.created_at.isoformat()
         dict_copy['updated_at'] = self.updated_at.isoformat()
         return dict_copy
-# Testing
+
+class User(BaseModel):
+    """
+    User class extending BaseModel
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add specific attributes for User
+        self.username = kwargs.get('username', '')
+        self.email = kwargs.get('email', '')
+
+    def __str__(self):
+        return "[{}] ({}) {}: {}".format(self.__class__.__name__, self.id, self.username, self.email)
+
+# Example usage
 if __name__ == "__main__":
-    my_model = BaseModel()
-    my_model.name = "My First Model"
-    my_model.my_number = 89
-    print(my_model)
-    my_model.save()
-    print(my_model)
-    my_model_json = my_model.to_dict()
-    print(my_model_json)
-    print("JSON of my_model:")
-    for key in my_model_json.keys():
-        print("\t{}: ({}) - {}".format(
-            key, type(my_model_json[key]), my_model_json[key]))
+    user_data = {
+            'id': '1',
+            'username': 'john_doe',
+            'email': 'john.doe@example.com',
+            'created_at': '2024-03-12T12:00:00.000000',
+            'updated_at': '2024-03-12T12:00:00.000000'
+            }
+    user = User(**user_data)
+    print(user)
+    user.save()
+    print(user.to_dict())
 

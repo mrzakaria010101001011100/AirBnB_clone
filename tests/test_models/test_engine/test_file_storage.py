@@ -25,19 +25,19 @@ class TestFileStorage(unittest.TestCase):
         except Exception as e:
             self.fail(f"reload() raised an unexpected exception: {e}")
 
-    def test_create_object(self):
-        """Test create_object method"""
-        objec = BaseModel()
-        self.storage.create_object(objec)
-        all_objcs = self.storage.get_all()
-        self.assertIn("BaseModel." + objec.id, all_objcs)
+    def test_new(self):
+        """Test new method"""
+        obj = BaseModel()
+        self.file_storage.new(obj)
+        all_objs = self.file_storage.all()
+        self.assertIn("BaseModel." + obj.id, all_objs)
 
     def test_reload_empty_file(self):
         """Test reload empty file"""
         open(FileStorage._FileStorage__file_path, "w").close()
         new_storage = FileStorage()
         new_storage.reload()
-        all_objs = new_storage.get_all()
+        all_objs = new_storage.all()
         self.assertEqual(len(all_objs), 0)
 
 

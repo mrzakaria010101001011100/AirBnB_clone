@@ -25,8 +25,9 @@ class FileStorage:
 
     def save(self):
         """method save"""
+        dictio = {}
         for key, valu in FileStorage.__objects.items():
-            dictio = valu.to_dict()
+            dictio[key] = valu.to_dict()
         with open(self.__file_path, 'w') as f:
             json.dump(dictio, f)
 
@@ -38,4 +39,4 @@ class FileStorage:
                 for key, val in objects_dict.items():
                     FileStorage.__objects[key] = eval(val["__class__"])(**val)
         except FileNotFoundError:
-            pass
+            return

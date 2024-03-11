@@ -1,59 +1,59 @@
 #!/usr/bin/python3
 """
-Module representing the BaseModel class.
+Module containing the BaseModel class
 """
 
 import uuid
-import datetime
-import models
-
+from datetime import datetime
 
 class BaseModel:
     """
-    Base class for other classes to inherit.
+    Defines the BaseModel class
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         """
-        Initializes a new instance of BaseModel.
+        Initializes a new instance of BaseModel
         """
-        if kwargs:
-            for key, value in kwargs.items():
-                if key == '__class__':
-                    continue
-                elif key in ['created_at', 'updated_at']:
-                    value = datetime.datetime.now().fromisoformat(value)
-                setattr(self, key, value)
-        else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.now()
-            self.updated_at = self.created_at
-            models.storage.new(self)
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
     def __str__(self):
         """
-        Returns a string representation of the BaseModel instance.
+        Returns a string representation of BaseModel instance
         """
         return "[{}] ({}) {}".format(
-            self.__class__.__name__,
-            self.id,
-            self.__dict__
-        )
+            type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """
-        Updates the public instance attribute updated_at"""
-
-        self.updated_at = datetime.datetime.now()
-        models.storage.save()
+        Updates the public instance attribute updated_at with the current datetime
+        """
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """
-        Returns a dictionary representation of the BaseModel instance.
+        Returns a dictionary containing all keys/values of __dict__ of the instance
         """
         obj_dict = self.__dict__.copy()
-        obj_dict['id'] = self.id
-        obj_dict['__class__'] = self.__class__.__name__
+        obj_dict['__class__'] = type(self).__name__
         obj_dict['created_at'] = self.created_at.isoformat()
         obj_dict['updated_at'] = self.updated_at.isoformat()
         return obj_dict
+
+# Testing
+if __name__ == "__main__":
+    my_model = BaseModel()
+    my_model.name = "My First Model"
+    my_model.my_number = 89
+    print(my_model)
+    my_model.save()
+    print(my_model)
+    my_model_json = my_model.to_dict()
+    print(my_model_json)
+    print("JSON of my_model:")
+    for key in my_model_json.keys():
+        print("\t{}: ({}) - {}".format(
+            key, type(my_model_json[key]), my_model_json[key]))
+

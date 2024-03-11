@@ -27,17 +27,17 @@ class TestFileStorage(unittest.TestCase):
 
     def test_new(self):
         """Test new method"""
-        obj = BaseModel()
+        objec = BaseModel()
         self.file_storage.new(obj)
-        all_objs = self.file_storage.all()
-        self.assertIn("BaseModel." + obj.id, all_objs)
+        all_objts = self.file_storage.all()
+        self.assertIn("BaseModel." + objec.id, all_objts)
 
     def test_reload_empty_file(self):
         """Test reload empty file"""
         open(FileStorage._FileStorage__file_path, "w").close()
-        new_storage = FileStorage()
-        new_storage.reload()
-        all_objs = new_storage.all()
+        _storage = FileStorage()
+        _storage.reload()
+        all_objs = _storage.all()
         self.assertEqual(len(all_objs), 0)
 
 

@@ -1,8 +1,6 @@
 from datetime import datetime
 from uuid import uuid4
 
-storage = {}  # Dictionnaire vide pour stocker les instances de BaseModel
-
 class BaseModel:
     """
     BaseModel class
@@ -23,16 +21,31 @@ class BaseModel:
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
+        """Updates the public instance attribute updated_at with the current datetime"""
         self.updated_at = datetime.now()
-        storage[self.id] = self  # Ajoutez l'instance à storage avec l'ID comme clé
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of the instance"""
         dict_copy = self.__dict__.copy()
+        dict_copy['__class__'] = self.__class__.__name__
         dict_copy['created_at'] = self.created_at.isoformat()
         dict_copy['updated_at'] = self.updated_at.isoformat()
         return dict_copy
 
+class User(BaseModel):
+    """
+    User class extending BaseModel
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add specific attributes for User
+        self.username = kwargs.get('username', '')
+        self.email = kwargs.get('email', '')
+
+    def __str__(self):
+        return "[{}] ({}) {}: {}".format(self.__class__.__name__, self.id, self.username, self.email)
+
+# Example usage
 if __name__ == "__main__":
     user_data = {
             'id': '1',
@@ -41,8 +54,9 @@ if __name__ == "__main__":
             'created_at': '2024-03-12T12:00:00.000000',
             'updated_at': '2024-03-12T12:00:00.000000'
             }
-    user = BaseModel(**user_data)
+    user = User(**user_data)
     print(user)
     user.save()
     print(user.to_dict())
+
 

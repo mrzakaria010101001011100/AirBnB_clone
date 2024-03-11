@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import cmd
 
+
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
@@ -13,6 +14,6 @@ class HBNBCommand(cmd.Cmd):
         print()
         return True
 
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-

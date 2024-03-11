@@ -2,24 +2,32 @@ from datetime import datetime
 from uuid import uuid4
 from models import storage
 
+
 class BaseModel:
     """
     BaseModel class
     """
+
     def __init__(self, *args, **kwargs):
         """Initialization of the BaseModel"""
         if kwargs:
-            for key, value in kwargs.items():
-                if key in ['created_at', 'updated_at']:
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                setattr(self, key, value)
+            for key, valu in kwargs.items():
+                if key != "__class__":
+                    if key in ['created_at', 'updated_at']:
+                        valu = datetime.strptime(valu, "%Y-%m-%dT%H:%M:%S.%f")
+                    setattr(self, key, valu)
+
         else:
             self.id = str(uuid4())
             self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
         """Return the string representation of BaseModel"""
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(
+                self.__class__.__name__,
+                self.id,
+                self.__dict__
+                )
 
     def save(self):
         self.updated_at = datetime.now()
@@ -35,6 +43,8 @@ class BaseModel:
         dict_copy['updated_at'] = self.updated_at.isoformat()
         return dict_copy
 
+
+"""
 if __name__ == "__main__":
     user_data = {
             'id': '1',
@@ -47,3 +57,4 @@ if __name__ == "__main__":
     print(user)
     user.save()
     print(user.to_dict())
+"""

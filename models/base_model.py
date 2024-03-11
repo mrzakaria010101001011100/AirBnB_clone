@@ -1,6 +1,7 @@
 from datetime import datetime
 from uuid import uuid4
-from models import storage
+
+storage = {}  # Dictionnaire vide pour stocker les instances de BaseModel
 
 class BaseModel:
     """
@@ -23,9 +24,7 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
-        storage.save()
-        # Ensure the object is added to storage after saving to file
-        storage.new(self)
+        storage[self.id] = self  # Ajoutez l'instance à storage avec l'ID comme clé
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of the instance"""

@@ -9,8 +9,7 @@ You must use the module cmd
 Your class definition must be: class HBNBCommand(cmd.Cmd):
 Your command interpreter should implement:
 quit and EOF to exit the program
-help (this action is provided by default by cmd but you should 
-keep it updated and documented as you work through tasks)
+help (this action is provided by default by cmd but you should keep it updated and documented as you work through tasks)
 a custom prompt: (hbnb)
 an empty line + ENTER shouldn’t execute anything
 Your code should not be executed when imported
@@ -20,8 +19,7 @@ You should end your file with:
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-to make your program executable except when imported. Please don’t 
-add anything around - the Checker won’t like it otherwise
+to make your program executable except when imported. Please don’t add anything around - the Checker won’t like it otherwise
 
 guillaume@ubuntu:~/AirBnB$ ./console.py
 (hbnb) help

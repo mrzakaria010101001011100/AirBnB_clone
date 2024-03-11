@@ -39,24 +39,8 @@ class BaseModel:
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of the instance"""
-        dict_copy = self.__dict__.copy()
+        dict_copy = dict(self.__dict__)
         dict_copy['__class__'] = self.__class__.__name__
         dict_copy['created_at'] = self.created_at.isoformat()
         dict_copy['updated_at'] = self.updated_at.isoformat()
         return dict_copy
-
-
-"""
-if __name__ == "__main__":
-    user_data = {
-            'id': '1',
-            'username': 'john_doe',
-            'email': 'john.doe@example.com',
-            'created_at': '2024-03-12T12:00:00.000000',
-            'updated_at': '2024-03-12T12:00:00.000000'
-            }
-    user = BaseModel(**user_data)
-    print(user)
-    user.save()
-    print(user.to_dict())
-"""

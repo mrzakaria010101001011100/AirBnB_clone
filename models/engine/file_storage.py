@@ -9,17 +9,6 @@ from models.place import Place
 from models.review import Review
 
 
-class_mapping = {
-    "BaseModel": BaseModel,
-    "User": User,
-    "State": State,
-    "City": City,
-    "Amenity": Amenity,
-    "Place": Place,
-    "Review": Review,
-}
-
-
 class FileStorage:
     """FileStorage class"""
     __file_path = "file.json"
@@ -49,8 +38,6 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 objects_dict = json.load(f)
                 for key, val in objects_dict.items():
-                    class_name = key["__class__"]
-                    if class_name in class_mapping:
-                        self.new(class_mapping[class_name](**key))
-        except Exception:
+                    FileStorage.__objects[key] = eval(val["__class__"])(**val)
+        except FileNotFoundError:
             return

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-from datetime import datetime
-from uuid import uuid4
+import datetime
+import uuid
 import models
 
 
@@ -15,12 +15,12 @@ class BaseModel:
             for key, valu in kwargs.items():
                 if key != "__class__":
                     if key in ['created_at', 'updated_at']:
-                        valu = datetime.strptime(valu, "%Y-%m-%dT%H:%M:%S.%f")
+                        valu = datetime.datetime.strptime(valu, "%Y-%m-%dT%H:%M:%S.%f")
                     setattr(self, key, valu)
 
         else:
-            self.id = str(uuid4())
-            self.created_at = datetime.now()
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
             self.updated_at = self.created_at
             models.storage.new(self)
 
@@ -33,7 +33,7 @@ class BaseModel:
                 )
 
     def save(self):
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.datetime.now()
         models.storage.save()
         # Ensure the object is added to storage after saving to file
 
@@ -45,4 +45,3 @@ class BaseModel:
         dict_copy['created_at'] = self.created_at.isoformat()
         dict_copy['updated_at'] = self.updated_at.isoformat()
         return dict_copy
-

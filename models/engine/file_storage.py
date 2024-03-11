@@ -1,10 +1,14 @@
+#!/usr/bin/python3
 import json
 
+
 class FileStorage:
+    """FileStorage class"""
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
+        """all objects"""
         return self.__objects
 
     def new(self, obj):
@@ -13,7 +17,10 @@ class FileStorage:
 
     def save(self):
         with open(self.__file_path, 'w') as f:
-            json.dump({key: obj.to_dict() for key, obj in self.__objects.items()}, f)
+            json.dump(
+                {key: obj.to_dict() for key, obj in self.__objects.items()},
+                f
+                )
 
     def reload(self):
         try:
@@ -22,4 +29,3 @@ class FileStorage:
                 self.__objects = {key: eval(obj_data['__class__'])(**obj_data) for key, obj_data in objects_dict.items()}
         except FileNotFoundError:
             pass
-

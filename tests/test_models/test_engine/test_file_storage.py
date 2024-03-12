@@ -28,7 +28,7 @@ class TestFileStorage(unittest.TestCase):
     def test_new(self):
         """Test new method"""
         objec = BaseModel()
-        self.file_storage.new(obj)
+        self.file_storage.new(objec)
         all_objts = self.file_storage.all()
         self.assertIn("BaseModel." + objec.id, all_objts)
 

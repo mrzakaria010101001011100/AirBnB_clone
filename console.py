@@ -1,10 +1,18 @@
 #!/usr/bin/python3
+"""Quit command to exit the program"""
 import cmd
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
+    """Quit command to exit the program"""
     prompt = '(hbnb) '
     file = None
 
@@ -29,7 +37,7 @@ class HBNBCommand(cmd.Cmd):
             new_instance = eval(arg)()
             new_instance.save()
             print(new_instance.id)
-        except Exception as e:
+        except Exception:
             print("** class doesn't exist **")
 
     def do_show(self, arg):
@@ -48,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
                 return
             print(obj)
-        except Exception as e:
+        except Exception:
             print("** class doesn't exist **")
 
     def do_destroy(self, arg):
@@ -68,7 +76,7 @@ class HBNBCommand(cmd.Cmd):
                 return
             del storage.all()[obj_key]
             storage.save()
-        except Exception as e:
+        except Exception:
             print("** class doesn't exist **")
 
     def do_all(self, arg):
@@ -81,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             objects_list = [str(obj) for obj in objects.values() if type(obj).__name__ == args[0]]
             print(objects_list)
-        except Exception as e:
+        except Exception:
             print("** class doesn't exist **")
 
     def do_update(self, arg):
@@ -107,9 +115,9 @@ class HBNBCommand(cmd.Cmd):
                 return
             setattr(obj, args[2], args[3])
             obj.save()
-        except Exception as e:
+        except Exception:
             print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-

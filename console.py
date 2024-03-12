@@ -121,13 +121,16 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, arg):
         """task advanced"""
+        switch = 0
         try:
-            list = arg[0:-1].split('(')
-            if '' in list:
-                list.remove('')
+            list = arg.split('(')
+            print(list)
+            if ')' in list:
+                list.remove(')')
+                switch = 1
             mainfs = list[0].split('.')
             funk = mainfs[1]
-            objec = mainfs[0][0:-1]
+            objec = mainfs[0]
             if len(list) == 1:
                 if funk == "all":
                     self.do_all(objec)
@@ -135,7 +138,10 @@ class HBNBCommand(cmd.Cmd):
                     self.do_count(objec)
             else:
                 scndfs = list[1].split(',', 1)
-                id4 = scndfs[0].strip('"')
+                if switch == 0:
+                    id4 = scndfs[0][0:-1].strip('"')
+                elif switch == 1:
+                    id4 = scndfs[0].strip('"')
                 if funk == "show":
                     self.do_show("{} {}".format(objec, id4))
                 if funk == "destroy":

@@ -119,6 +119,30 @@ class HBNBCommand(cmd.Cmd):
         except Exception:
             print("** class doesn't exist **")
 
+    def default(self, arg):
+        """task advanced"""
+        try:
+            list = arg[0:-1].split('(')
+            if '' in list:
+                list.remove('')
+            mainfs = list[0].split('.')
+            funk = mainfs[1]
+            objec = mainfs[0][0:-1]
+            if len(list) == 1:
+                if funk == "all":
+                    self.do_all(objec)
+                if funk == "count":
+                    self.do_count(objec)
+            else:
+                scndfs = list[1].split(',', 1)
+                id4 = scndfs[0].strip('"')
+                if funk == "show":
+                    self.do_show("{} {}".format(objec, id4))
+                if funk == "destroy":
+                    self.do_destroy("{} {}".format(objec, id4))
+        except Exception:
+            pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

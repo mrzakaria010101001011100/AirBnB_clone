@@ -87,7 +87,8 @@ class HBNBCommand(cmd.Cmd):
             print([str(obj) for obj in objects.values()])
             return
         try:
-            objects_list = [str(obj) for obj in objects.values() if type(obj).__name__ == args[0]]
+            objects_list = [str(obj) for obj in objects.values()
+                            if type(obj).__name__ == args[0]]
             print(objects_list)
         except Exception:
             print("** class doesn't exist **")

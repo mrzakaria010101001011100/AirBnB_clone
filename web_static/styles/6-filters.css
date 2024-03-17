@@ -1,0 +1,53 @@
+/* styles/6-filters.css */
+
+/* Filters Container */
+.filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #DDDDDD;
+    padding: 20px;
+}
+
+/* Locations and Amenities Filters */
+.locations,
+.amenities {
+    position: relative;
+}
+
+/* Popover */
+.popover {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    list-style-type: none;
+    background-color: #FAFAFA;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    color: #484848;
+}
+
+/* Show Popover on Hover */
+.locations:hover .popover,
+.amenities:hover .popover {
+    display: block;
+}
+
+/* Title */
+h3 {
+    font-weight: 600;
+}
+
+/* Subtitle */
+h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+/* State Name */
+h2 {
+    font-size: 16px;
+}

@@ -1,0 +1,11 @@
+/* styles/3-header.css */
+
+/* Styling for the header */
+header {
+    color: white;
+    height: 70px;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC; /* Using solid border instead of shorthand */
+}
+
+/* Additional styles specific to the header */

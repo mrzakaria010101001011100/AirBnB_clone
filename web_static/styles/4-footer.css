@@ -1,0 +1,11 @@
+/* styles/3-footer.css */
+
+/* Styling for the footer */
+footer {
+    color: white;
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #CCCCCC; /* Using solid border instead of shorthand */
+}
+
+/* Additional styles specific to the footer */

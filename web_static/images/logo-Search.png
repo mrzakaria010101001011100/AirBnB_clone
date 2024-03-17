@@ -1,0 +1,4 @@
+.logo-Search {
+    background-image: url('../images/logo-Search.png');
+    /* Other styles */
+}
